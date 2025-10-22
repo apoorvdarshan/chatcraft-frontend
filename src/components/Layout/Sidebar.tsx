@@ -274,6 +274,9 @@ const Sidebar: React.FC<SidebarProps> = () => {
         </Box>
       )}
 
+      {/* Spacer for collapsed sidebar */}
+      {!sidebarOpen && <Box sx={{ flex: 1 }} />}
+
       {/* Try Pro */}
       <Box
         sx={{
