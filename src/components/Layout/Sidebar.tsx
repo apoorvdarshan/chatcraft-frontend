@@ -23,6 +23,7 @@ import {
 } from '@mui/icons-material';
 import { useChatStore } from '../../store/chatStore';
 import logo from '../../assets/logo.png';
+import lawrenceCruzImage from '../../assets/lawrence cruz.png';
 
 const SIDEBAR_WIDTH = 280;
 const COLLAPSED_SIDEBAR_WIDTH = 72;
@@ -295,21 +296,16 @@ const Sidebar: React.FC<SidebarProps> = () => {
       >
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
           <Box
+            component="img"
+            src={lawrenceCruzImage}
+            alt="Lawrence Cruz"
             sx={{
               width: 32,
               height: 32,
               borderRadius: '50%',
-              bgcolor: '#10B981',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: 'white',
-              fontSize: '0.875rem',
-              fontWeight: 600,
+              objectFit: 'cover',
             }}
-          >
-            LC
-          </Box>
+          />
           {sidebarOpen && (
             <Typography variant="body2" sx={{ fontSize: '0.875rem', fontWeight: 500 }}>
               Lawrence Cruz
