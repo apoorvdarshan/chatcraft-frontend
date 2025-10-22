@@ -115,11 +115,20 @@ const Sidebar: React.FC<SidebarProps> = () => {
             <ListItemButton
               selected={index === 0}
               sx={{
-                borderRadius: '8px',
+                borderRadius: '12px',
+                py: 1.5,
+                px: 1.5,
+                transition: 'all 0.2s',
+                '&:hover': {
+                  bgcolor: '#FFFFFF',
+                  boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08)',
+                },
                 '&.Mui-selected': {
                   bgcolor: 'white',
+                  boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08)',
                   '&:hover': {
                     bgcolor: 'white',
+                    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08)',
                   },
                 },
                 justifyContent: sidebarOpen ? 'initial' : 'center',
@@ -142,11 +151,23 @@ const Sidebar: React.FC<SidebarProps> = () => {
                     primaryTypographyProps={{
                       fontSize: '0.875rem',
                       fontWeight: index === 0 ? 500 : 400,
+                      color: '#1F2937',
                     }}
                   />
-                  <Typography variant="caption" sx={{ color: '#9CA3AF', fontSize: '0.75rem' }}>
+                  <Box
+                    sx={{
+                      bgcolor: '#F3F4F6',
+                      color: '#6B7280',
+                      fontSize: '0.75rem',
+                      fontWeight: 500,
+                      px: 0.75,
+                      py: 0.25,
+                      borderRadius: '4px',
+                      lineHeight: 1.5,
+                    }}
+                  >
                     {item.shortcut}
-                  </Typography>
+                  </Box>
                 </>
               )}
             </ListItemButton>
