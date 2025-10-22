@@ -13,7 +13,7 @@ import {
 import {
   Menu as MenuIcon,
   Share as ShareIcon,
-  HelpOutline as HelpIcon,
+  Help as HelpIcon,
   Add as AddIcon,
 } from '@mui/icons-material';
 import { useChatStore, ModelType } from '../../store/chatStore';
