@@ -22,6 +22,7 @@ import {
   Search as SearchIcon,
 } from '@mui/icons-material';
 import { useChatStore } from '../../store/chatStore';
+import logo from '../../assets/logo.png';
 
 const SIDEBAR_WIDTH = 280;
 const COLLAPSED_SIDEBAR_WIDTH = 72;
@@ -55,21 +56,16 @@ const Sidebar: React.FC<SidebarProps> = () => {
       {/* Header */}
       <Box sx={{ p: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
         <Box
+          component="img"
+          src={logo}
+          alt="Inteliq Logo"
           sx={{
             width: 32,
             height: 32,
             borderRadius: '8px',
-            bgcolor: '#4F46E5',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: 'white',
+            objectFit: 'contain',
           }}
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z" />
-          </svg>
-        </Box>
+        />
         {sidebarOpen && (
           <Typography variant="h6" sx={{ fontWeight: 700, fontSize: '1.125rem' }}>
             Inteliq
