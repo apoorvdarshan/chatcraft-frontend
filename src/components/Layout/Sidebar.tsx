@@ -39,6 +39,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { chats, currentChatId, setCurrentChat, sidebarOpen, setSidebarOpen } = useChatStore();
+  const [searchQuery, setSearchQuery] = React.useState('');
 
   const menuItems = [
     { icon: <SmsIcon />, label: 'Home', shortcut: '⌘ H' },
@@ -46,6 +47,16 @@ const Sidebar: React.FC<SidebarProps> = () => {
     { icon: <WatchLaterIcon />, label: 'History', shortcut: '⌘ G' },
     { icon: <PublicIcon />, label: 'Explore', shortcut: '⌘ L' },
   ];
+
+  // Filter chats based on search query
+  const filteredChats = React.useMemo(() => {
+    if (!searchQuery.trim()) {
+      return chats;
+    }
+    return chats.filter((chat) =>
+      chat.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [chats, searchQuery]);
 
   const sidebarContent = (
     <Box
@@ -107,6 +118,8 @@ const Sidebar: React.FC<SidebarProps> = () => {
             fullWidth
             placeholder="Search for chats..."
             size="small"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
             InputProps={{
               startAdornment: <SearchIcon sx={{ mr: 1, color: '#9CA3AF', fontSize: 18 }} />,
             }}
@@ -220,7 +233,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
             Recent Chats
           </Typography>
           <List sx={{ p: 0 }}>
-            {chats.slice(0, 8).map((chat) => (
+            {filteredChats.slice(0, searchQuery.trim() ? filteredChats.length : 8).map((chat) => (
               <ListItemButton
                 key={chat.id}
                 onClick={() => setCurrentChat(chat.id)}
@@ -255,8 +268,21 @@ const Sidebar: React.FC<SidebarProps> = () => {
                 />
               </ListItemButton>
             ))}
+            {filteredChats.length === 0 && (
+              <Typography
+                variant="body2"
+                sx={{
+                  fontSize: '0.813rem',
+                  color: '#9CA3AF',
+                  textAlign: 'center',
+                  py: 2,
+                }}
+              >
+                No chats found
+              </Typography>
+            )}
           </List>
-          {chats.length > 8 && (
+          {!searchQuery.trim() && chats.length > 8 && (
             <Typography
               variant="caption"
               sx={{
