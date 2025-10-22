@@ -147,18 +147,19 @@ const Header: React.FC<HeaderProps> = ({ onNewChat }) => {
           <IconButton
             onClick={onNewChat}
             sx={{
-              bgcolor: '#4F46E5',
+              bgcolor: '#3B82F6',
               color: 'white',
-              borderRadius: '8px',
-              px: 2,
+              borderRadius: '24px',
+              px: 2.5,
+              py: 1,
               '&:hover': {
-                bgcolor: '#4338CA',
+                bgcolor: '#2563EB',
               },
             }}
           >
             <AddIcon fontSize="small" sx={{ mr: 0.5 }} />
             {!isMobile && (
-              <Typography variant="button" sx={{ fontSize: '0.875rem' }}>
+              <Typography variant="button" sx={{ fontSize: '0.875rem', textTransform: 'none', fontWeight: 500 }}>
                 New Chat
               </Typography>
             )}
