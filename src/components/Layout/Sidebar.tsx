@@ -1,0 +1,329 @@
+import React from 'react';
+import {
+  Box,
+  Drawer,
+  IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  TextField,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
+import {
+  Home as HomeIcon,
+  Folder as FolderIcon,
+  History as HistoryIcon,
+  Explore as ExploreIcon,
+  ChevronRight as ChevronRightIcon,
+  Search as SearchIcon,
+} from '@mui/icons-material';
+import { useChatStore } from '../../store/chatStore';
+
+const SIDEBAR_WIDTH = 280;
+const COLLAPSED_SIDEBAR_WIDTH = 72;
+
+interface SidebarProps {
+  onNewChat: () => void;
+}
+
+const Sidebar: React.FC<SidebarProps> = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const { chats, currentChatId, setCurrentChat, sidebarOpen, setSidebarOpen } = useChatStore();
+
+  const menuItems = [
+    { icon: <HomeIcon />, label: 'Home', shortcut: '⌘ H' },
+    { icon: <FolderIcon />, label: 'Library', shortcut: '⌘ T' },
+    { icon: <HistoryIcon />, label: 'History', shortcut: '⌘ G' },
+    { icon: <ExploreIcon />, label: 'Explore', shortcut: '⌘ L' },
+  ];
+
+  const sidebarContent = (
+    <Box
+      sx={{
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        bgcolor: '#F9FAFB',
+        borderRight: '1px solid #E5E7EB',
+      }}
+    >
+      {/* Header */}
+      <Box sx={{ p: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+        <Box
+          sx={{
+            width: 32,
+            height: 32,
+            borderRadius: '8px',
+            bgcolor: '#4F46E5',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: 'white',
+          }}
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z" />
+          </svg>
+        </Box>
+        {sidebarOpen && (
+          <Typography variant="h6" sx={{ fontWeight: 700, fontSize: '1.125rem' }}>
+            Inteliq
+          </Typography>
+        )}
+        {!isMobile && (
+          <IconButton
+            size="small"
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            sx={{ ml: 'auto' }}
+          >
+            <ChevronRightIcon
+              sx={{
+                transform: sidebarOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                transition: 'transform 0.2s',
+              }}
+            />
+          </IconButton>
+        )}
+      </Box>
+
+      {/* Search */}
+      {sidebarOpen && (
+        <Box sx={{ px: 2, pb: 2 }}>
+          <TextField
+            fullWidth
+            placeholder="Search for chats..."
+            size="small"
+            InputProps={{
+              startAdornment: <SearchIcon sx={{ mr: 1, color: '#9CA3AF', fontSize: 20 }} />,
+            }}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                borderRadius: '8px',
+                bgcolor: 'white',
+                fontSize: '0.875rem',
+              },
+            }}
+          />
+        </Box>
+      )}
+
+      {/* Menu Items */}
+      <List sx={{ px: 1 }}>
+        {menuItems.map((item, index) => (
+          <ListItem key={index} disablePadding sx={{ mb: 0.5 }}>
+            <ListItemButton
+              selected={index === 0}
+              sx={{
+                borderRadius: '8px',
+                '&.Mui-selected': {
+                  bgcolor: 'white',
+                  '&:hover': {
+                    bgcolor: 'white',
+                  },
+                },
+                justifyContent: sidebarOpen ? 'initial' : 'center',
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: sidebarOpen ? 2 : 'auto',
+                  justifyContent: 'center',
+                  color: index === 0 ? '#4F46E5' : '#6B7280',
+                }}
+              >
+                {item.icon}
+              </ListItemIcon>
+              {sidebarOpen && (
+                <>
+                  <ListItemText
+                    primary={item.label}
+                    primaryTypographyProps={{
+                      fontSize: '0.875rem',
+                      fontWeight: index === 0 ? 500 : 400,
+                    }}
+                  />
+                  <Typography variant="caption" sx={{ color: '#9CA3AF', fontSize: '0.75rem' }}>
+                    {item.shortcut}
+                  </Typography>
+                </>
+              )}
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+
+      {/* Recent Chats */}
+      {sidebarOpen && (
+        <Box sx={{ flex: 1, overflow: 'auto', px: 2, mt: 2 }}>
+          <Typography
+            variant="subtitle2"
+            sx={{ fontWeight: 600, fontSize: '0.75rem', mb: 1, color: '#6B7280' }}
+          >
+            Recent Chats
+          </Typography>
+          <List sx={{ p: 0 }}>
+            {chats.slice(0, 8).map((chat) => (
+              <ListItemButton
+                key={chat.id}
+                onClick={() => setCurrentChat(chat.id)}
+                selected={chat.id === currentChatId}
+                sx={{
+                  borderRadius: '8px',
+                  mb: 0.5,
+                  py: 1,
+                  px: 1.5,
+                  '&.Mui-selected': {
+                    bgcolor: '#EEF2FF',
+                  },
+                }}
+              >
+                <ListItemText
+                  primary={chat.title}
+                  primaryTypographyProps={{
+                    fontSize: '0.875rem',
+                    noWrap: true,
+                  }}
+                />
+              </ListItemButton>
+            ))}
+          </List>
+          {chats.length > 8 && (
+            <Typography
+              variant="caption"
+              sx={{
+                color: '#4F46E5',
+                cursor: 'pointer',
+                display: 'block',
+                mt: 1,
+                fontSize: '0.875rem',
+              }}
+            >
+              View All →
+            </Typography>
+          )}
+        </Box>
+      )}
+
+      {/* Try Pro */}
+      {sidebarOpen && (
+        <Box
+          sx={{
+            m: 2,
+            p: 2,
+            bgcolor: 'white',
+            borderRadius: '12px',
+            border: '1px solid #E5E7EB',
+          }}
+        >
+          <Typography variant="subtitle2" sx={{ fontWeight: 600, fontSize: '0.875rem', mb: 0.5 }}>
+            Try Pro!
+          </Typography>
+          <Typography variant="caption" sx={{ color: '#6B7280', fontSize: '0.75rem' }}>
+            Upgrade for smarter AI and more...
+          </Typography>
+          <Box
+            sx={{
+              mt: 1.5,
+              width: 32,
+              height: 32,
+              borderRadius: '8px',
+              bgcolor: '#EEF2FF',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#4F46E5',
+            }}
+          >
+            ✨
+          </Box>
+        </Box>
+      )}
+
+      {/* User Profile */}
+      <Box
+        sx={{
+          p: 2,
+          borderTop: '1px solid #E5E7EB',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 1.5,
+          justifyContent: sidebarOpen ? 'space-between' : 'center',
+        }}
+      >
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+          <Box
+            sx={{
+              width: 32,
+              height: 32,
+              borderRadius: '50%',
+              bgcolor: '#10B981',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: 'white',
+              fontSize: '0.875rem',
+              fontWeight: 600,
+            }}
+          >
+            LC
+          </Box>
+          {sidebarOpen && (
+            <Typography variant="body2" sx={{ fontSize: '0.875rem', fontWeight: 500 }}>
+              Lawrence Cruz
+            </Typography>
+          )}
+        </Box>
+        {sidebarOpen && (
+          <IconButton size="small">
+            <ChevronRightIcon fontSize="small" />
+          </IconButton>
+        )}
+      </Box>
+    </Box>
+  );
+
+  if (isMobile) {
+    return (
+      <Drawer
+        anchor="left"
+        open={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+        sx={{
+          '& .MuiDrawer-paper': {
+            width: SIDEBAR_WIDTH,
+          },
+        }}
+      >
+        {sidebarContent}
+      </Drawer>
+    );
+  }
+
+  return (
+    <Drawer
+      variant="permanent"
+      sx={{
+        width: sidebarOpen ? SIDEBAR_WIDTH : COLLAPSED_SIDEBAR_WIDTH,
+        flexShrink: 0,
+        '& .MuiDrawer-paper': {
+          width: sidebarOpen ? SIDEBAR_WIDTH : COLLAPSED_SIDEBAR_WIDTH,
+          boxSizing: 'border-box',
+          transition: theme.transitions.create('width', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+          }),
+        },
+      }}
+    >
+      {sidebarContent}
+    </Drawer>
+  );
+};
+
+export default Sidebar;
