@@ -224,16 +224,20 @@ const Sidebar: React.FC<SidebarProps> = () => {
                 onClick={() => setCurrentChat(chat.id)}
                 selected={chat.id === currentChatId}
                 sx={{
-                  borderRadius: '6px',
+                  borderRadius: '8px',
                   mb: 0.5,
                   py: 0.75,
                   px: 1,
                   minHeight: 'auto',
                   '&:hover': {
-                    bgcolor: 'rgba(0, 0, 0, 0.02)',
+                    bgcolor: '#F3F4F6',
                   },
                   '&.Mui-selected': {
-                    bgcolor: 'rgba(0, 0, 0, 0.04)',
+                    bgcolor: 'white',
+                    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08)',
+                    '&:hover': {
+                      bgcolor: 'white',
+                    },
                   },
                 }}
               >
