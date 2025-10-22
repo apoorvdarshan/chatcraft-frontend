@@ -14,10 +14,10 @@ import {
   useTheme,
 } from '@mui/material';
 import {
-  Home as HomeIcon,
+  Sms as SmsIcon,
   Folder as FolderIcon,
-  History as HistoryIcon,
-  Explore as ExploreIcon,
+  WatchLater as WatchLaterIcon,
+  Public as PublicIcon,
   ChevronRight as ChevronRightIcon,
   Search as SearchIcon,
 } from '@mui/icons-material';
@@ -37,10 +37,10 @@ const Sidebar: React.FC<SidebarProps> = () => {
   const { chats, currentChatId, setCurrentChat, sidebarOpen, setSidebarOpen } = useChatStore();
 
   const menuItems = [
-    { icon: <HomeIcon />, label: 'Home', shortcut: '⌘ H' },
+    { icon: <SmsIcon />, label: 'Home', shortcut: '⌘ H' },
     { icon: <FolderIcon />, label: 'Library', shortcut: '⌘ T' },
-    { icon: <HistoryIcon />, label: 'History', shortcut: '⌘ G' },
-    { icon: <ExploreIcon />, label: 'Explore', shortcut: '⌘ L' },
+    { icon: <WatchLaterIcon />, label: 'History', shortcut: '⌘ G' },
+    { icon: <PublicIcon />, label: 'Explore', shortcut: '⌘ L' },
   ];
 
   const sidebarContent = (
