@@ -22,6 +22,7 @@ import {
   Search as SearchIcon,
   UnfoldMore as UnfoldMoreIcon,
   RocketLaunch as RocketLaunchIcon,
+  MoreHoriz as MoreHorizIcon,
 } from '@mui/icons-material';
 import { useChatStore } from '../../store/chatStore';
 import logo from '../../assets/logo.png';
@@ -212,7 +213,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
         <Box sx={{ flex: 1, overflow: 'auto', px: 2, mt: 2 }}>
           <Typography
             variant="subtitle2"
-            sx={{ fontWeight: 600, fontSize: '0.75rem', mb: 1, color: '#6B7280' }}
+            sx={{ fontWeight: 600, fontSize: '0.8rem', mb: 1.5, color: '#1F2937' }}
           >
             Recent Chats
           </Typography>
@@ -223,20 +224,27 @@ const Sidebar: React.FC<SidebarProps> = () => {
                 onClick={() => setCurrentChat(chat.id)}
                 selected={chat.id === currentChatId}
                 sx={{
-                  borderRadius: '8px',
+                  borderRadius: '6px',
                   mb: 0.5,
-                  py: 1,
-                  px: 1.5,
+                  py: 0.75,
+                  px: 1,
+                  minHeight: 'auto',
+                  '&:hover': {
+                    bgcolor: 'rgba(0, 0, 0, 0.02)',
+                  },
                   '&.Mui-selected': {
-                    bgcolor: '#EEF2FF',
+                    bgcolor: 'rgba(0, 0, 0, 0.04)',
                   },
                 }}
               >
                 <ListItemText
                   primary={chat.title}
                   primaryTypographyProps={{
-                    fontSize: '0.875rem',
+                    fontSize: '0.813rem',
+                    fontWeight: 400,
+                    color: '#4B5563',
                     noWrap: true,
+                    lineHeight: 1.5,
                   }}
                 />
               </ListItemButton>
@@ -249,8 +257,9 @@ const Sidebar: React.FC<SidebarProps> = () => {
                 color: '#4F46E5',
                 cursor: 'pointer',
                 display: 'block',
-                mt: 1,
-                fontSize: '0.875rem',
+                mt: 1.5,
+                fontSize: '0.813rem',
+                fontWeight: 500,
               }}
             >
               View All →
