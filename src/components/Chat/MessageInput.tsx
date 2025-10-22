@@ -171,11 +171,12 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage }) => {
         <Box
           sx={{
             display: 'flex',
-            gap: 1,
-            alignItems: 'flex-end',
-            p: 1.5,
+            alignItems: 'center',
+            gap: 2,
+            px: 2.5,
+            py: 1.5,
             border: '1px solid #E5E7EB',
-            borderRadius: '12px',
+            borderRadius: '16px',
             bgcolor: 'white',
             '&:focus-within': {
               borderColor: '#4F46E5',
@@ -184,7 +185,7 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage }) => {
           }}
         >
           {/* Attach Buttons */}
-          <Box sx={{ display: 'flex', gap: 0.5 }}>
+          <Box sx={{ display: 'flex', gap: 0.5, flexShrink: 0 }}>
             <input
               type="file"
               ref={fileInputRef}
@@ -197,20 +198,22 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage }) => {
               onClick={handleAttachClick}
               sx={{
                 color: '#6B7280',
+                padding: '6px',
                 '&:hover': { bgcolor: '#F3F4F6' },
               }}
             >
-              <AttachFileIcon fontSize="small" />
+              <AttachFileIcon sx={{ fontSize: 20 }} />
             </IconButton>
             <IconButton
               size="small"
               onClick={handleAttachClick}
               sx={{
                 color: '#6B7280',
+                padding: '6px',
                 '&:hover': { bgcolor: '#F3F4F6' },
               }}
             >
-              <PhotoCameraIcon fontSize="small" />
+              <PhotoCameraIcon sx={{ fontSize: 20 }} />
             </IconButton>
           </Box>
 
@@ -218,7 +221,7 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage }) => {
           <TextField
             fullWidth
             multiline
-            maxRows={6}
+            maxRows={4}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyPress={handleKeyPress}
@@ -228,9 +231,17 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage }) => {
               disableUnderline: true,
             }}
             sx={{
+              '& .MuiInputBase-root': {
+                padding: 0,
+              },
               '& .MuiInputBase-input': {
-                fontSize: '0.875rem',
-                py: 0.5,
+                fontSize: '0.9375rem',
+                padding: 0,
+                color: '#1F2937',
+                '&::placeholder': {
+                  color: '#9CA3AF',
+                  opacity: 1,
+                },
               },
             }}
           />
@@ -240,8 +251,9 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage }) => {
             variant="caption"
             sx={{
               color: '#9CA3AF',
-              fontSize: '0.75rem',
+              fontSize: '0.8125rem',
               whiteSpace: 'nowrap',
+              flexShrink: 0,
             }}
           >
             {message.length}/1000
@@ -252,11 +264,13 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage }) => {
             onClick={handleSend}
             disabled={!message.trim()}
             sx={{
-              bgcolor: message.trim() ? '#4F46E5' : '#E5E7EB',
-              color: 'white',
+              bgcolor: message.trim() ? '#C7D2FE' : '#E5E7EB',
+              color: message.trim() ? '#6366F1' : '#9CA3AF',
               borderRadius: '8px',
+              padding: '8px',
+              flexShrink: 0,
               '&:hover': {
-                bgcolor: message.trim() ? '#4338CA' : '#E5E7EB',
+                bgcolor: message.trim() ? '#A5B4FC' : '#E5E7EB',
               },
               '&.Mui-disabled': {
                 bgcolor: '#E5E7EB',
@@ -264,7 +278,7 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage }) => {
               },
             }}
           >
-            <SendIcon fontSize="small" />
+            <SendIcon sx={{ fontSize: 20 }} />
           </IconButton>
         </Box>
       </Box>
