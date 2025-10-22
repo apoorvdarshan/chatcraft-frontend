@@ -21,6 +21,7 @@ import {
   ChevronRight as ChevronRightIcon,
   Search as SearchIcon,
   UnfoldMore as UnfoldMoreIcon,
+  RocketLaunch as RocketLaunchIcon,
 } from '@mui/icons-material';
 import { useChatStore } from '../../store/chatStore';
 import logo from '../../assets/logo.png';
@@ -262,33 +263,41 @@ const Sidebar: React.FC<SidebarProps> = () => {
       {sidebarOpen && (
         <Box
           sx={{
-            m: 2,
+            mx: 2,
+            mb: 1.5,
             p: 2,
-            bgcolor: 'white',
-            borderRadius: '12px',
-            border: '1px solid #E5E7EB',
+            height: 72,
+            background: 'linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 50%, #DDD6FE 100%)',
+            borderRadius: '16px',
+            border: 'none',
+            position: 'relative',
+            overflow: 'hidden',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
           }}
         >
-          <Typography variant="subtitle2" sx={{ fontWeight: 600, fontSize: '0.875rem', mb: 0.5 }}>
+          <Typography variant="subtitle2" sx={{ fontWeight: 700, fontSize: '1rem', mb: 0.5, color: '#1F2937' }}>
             Try Pro!
           </Typography>
-          <Typography variant="caption" sx={{ color: '#6B7280', fontSize: '0.75rem' }}>
+          <Typography variant="caption" sx={{ color: '#6B7280', fontSize: '0.813rem' }}>
             Upgrade for smarter AI and more...
           </Typography>
           <Box
             sx={{
-              mt: 1.5,
-              width: 32,
-              height: 32,
-              borderRadius: '8px',
-              bgcolor: '#EEF2FF',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#4F46E5',
+              position: 'absolute',
+              right: 16,
+              top: '50%',
+              transform: 'translateY(-65%)',
             }}
           >
-            ✨
+            <RocketLaunchIcon
+              sx={{
+                fontSize: '1.75rem',
+                color: '#818CF8',
+                opacity: 0.9,
+              }}
+            />
           </Box>
         </Box>
       )}
@@ -296,8 +305,13 @@ const Sidebar: React.FC<SidebarProps> = () => {
       {/* User Profile */}
       <Box
         sx={{
+          mx: 2,
+          mb: 2,
           p: 2,
-          borderTop: '1px solid #E5E7EB',
+          height: 72,
+          bgcolor: 'white',
+          borderRadius: '16px',
+          border: '1px solid #E5E7EB',
           display: 'flex',
           alignItems: 'center',
           gap: 1.5,
