@@ -76,12 +76,21 @@ const Sidebar: React.FC<SidebarProps> = () => {
           <IconButton
             size="small"
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            sx={{ ml: 'auto' }}
+            sx={{
+              ml: 'auto',
+              bgcolor: '#EEF2FF',
+              borderRadius: '8px',
+              '&:hover': {
+                bgcolor: '#E0E7FF',
+              },
+            }}
           >
             <ChevronRightIcon
               sx={{
                 transform: sidebarOpen ? 'rotate(180deg)' : 'rotate(0deg)',
                 transition: 'transform 0.2s',
+                color: '#4F46E5',
+                fontSize: '1.25rem',
               }}
             />
           </IconButton>
