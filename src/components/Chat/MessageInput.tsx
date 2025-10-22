@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import {
   AttachFile as AttachFileIcon,
-  Image as ImageIcon,
+  PhotoCamera as PhotoCameraIcon,
   Send as SendIcon,
   Close as CloseIcon,
   Delete as DeleteIcon,
@@ -210,7 +210,7 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage }) => {
                 '&:hover': { bgcolor: '#F3F4F6' },
               }}
             >
-              <ImageIcon fontSize="small" />
+              <PhotoCameraIcon fontSize="small" />
             </IconButton>
           </Box>
 
