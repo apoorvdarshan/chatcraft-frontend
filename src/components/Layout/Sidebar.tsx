@@ -95,13 +95,33 @@ const Sidebar: React.FC<SidebarProps> = () => {
             placeholder="Search for chats..."
             size="small"
             InputProps={{
-              startAdornment: <SearchIcon sx={{ mr: 1, color: '#9CA3AF', fontSize: 20 }} />,
+              startAdornment: <SearchIcon sx={{ mr: 1, color: '#9CA3AF', fontSize: 18 }} />,
             }}
             sx={{
               '& .MuiOutlinedInput-root': {
-                borderRadius: '8px',
+                borderRadius: '24px',
                 bgcolor: 'white',
                 fontSize: '0.875rem',
+                paddingLeft: '8px',
+                '& fieldset': {
+                  borderColor: '#E5E7EB',
+                  borderWidth: '1px',
+                },
+                '&:hover fieldset': {
+                  borderColor: '#D1D5DB',
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: '#4F46E5',
+                  borderWidth: '1px',
+                },
+              },
+              '& .MuiOutlinedInput-input': {
+                padding: '8px 12px 8px 4px',
+                color: '#1F2937',
+                '&::placeholder': {
+                  color: '#9CA3AF',
+                  opacity: 1,
+                },
               },
             }}
           />
