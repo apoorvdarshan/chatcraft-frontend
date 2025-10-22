@@ -29,7 +29,7 @@ import logo from '../../assets/logo.png';
 import lawrenceCruzImage from '../../assets/lawrence cruz.png';
 
 const SIDEBAR_WIDTH = 280;
-const COLLAPSED_SIDEBAR_WIDTH = 72;
+const COLLAPSED_SIDEBAR_WIDTH = 88;
 
 interface SidebarProps {
   onNewChat: () => void;
@@ -150,7 +150,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
               sx={{
                 borderRadius: '12px',
                 py: 1.5,
-                px: 1.5,
+                px: sidebarOpen ? 1.5 : 0,
                 transition: 'all 0.2s',
                 '&:hover': {
                   bgcolor: '#FFFFFF',
@@ -164,13 +164,15 @@ const Sidebar: React.FC<SidebarProps> = () => {
                     boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08)',
                   },
                 },
-                justifyContent: sidebarOpen ? 'initial' : 'center',
+                justifyContent: 'center',
+                display: 'flex',
+                alignItems: 'center',
               }}
             >
               <ListItemIcon
                 sx={{
                   minWidth: 0,
-                  mr: sidebarOpen ? 2 : 'auto',
+                  mr: sidebarOpen ? 2 : 0,
                   justifyContent: 'center',
                   color: index === 0 ? '#4F46E5' : '#6B7280',
                 }}
@@ -273,86 +275,105 @@ const Sidebar: React.FC<SidebarProps> = () => {
       )}
 
       {/* Try Pro */}
-      {sidebarOpen && (
-        <Box
-          sx={{
-            mx: 2,
-            mb: 1.5,
-            p: 2,
-            height: 72,
-            background: 'linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 50%, #DDD6FE 100%)',
-            borderRadius: '16px',
-            border: 'none',
-            position: 'relative',
-            overflow: 'hidden',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-          }}
-        >
-          <Typography variant="subtitle2" sx={{ fontWeight: 700, fontSize: '1rem', mb: 0.5, color: '#1F2937' }}>
+      <Box
+        sx={{
+          mx: 2,
+          mb: 1.5,
+          p: sidebarOpen ? 2 : 1.5,
+          height: sidebarOpen ? 72 : 'auto',
+          background: sidebarOpen ? 'linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 50%, #DDD6FE 100%)' : 'white',
+          borderRadius: '16px',
+          border: sidebarOpen ? 'none' : '1px solid #E5E7EB',
+          position: 'relative',
+          overflow: 'hidden',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        {sidebarOpen ? (
+          <>
+            <Typography variant="subtitle2" sx={{ fontWeight: 700, fontSize: '1rem', mb: 0.5, color: '#1F2937', alignSelf: 'flex-start' }}>
+              Try Pro!
+            </Typography>
+            <Typography variant="caption" sx={{ color: '#6B7280', fontSize: '0.813rem', alignSelf: 'flex-start' }}>
+              Upgrade for smarter AI and more...
+            </Typography>
+            <Box
+              sx={{
+                position: 'absolute',
+                right: 16,
+                top: '50%',
+                transform: 'translateY(-65%)',
+              }}
+            >
+              <RocketLaunchIcon
+                sx={{
+                  fontSize: '1.75rem',
+                  color: '#818CF8',
+                  opacity: 0.9,
+                }}
+              />
+            </Box>
+          </>
+        ) : (
+          <Typography variant="caption" sx={{ fontSize: '0.75rem', fontWeight: 600, color: '#1F2937' }}>
             Try Pro!
           </Typography>
-          <Typography variant="caption" sx={{ color: '#6B7280', fontSize: '0.813rem' }}>
-            Upgrade for smarter AI and more...
-          </Typography>
-          <Box
-            sx={{
-              position: 'absolute',
-              right: 16,
-              top: '50%',
-              transform: 'translateY(-65%)',
-            }}
-          >
-            <RocketLaunchIcon
-              sx={{
-                fontSize: '1.75rem',
-                color: '#818CF8',
-                opacity: 0.9,
-              }}
-            />
-          </Box>
-        </Box>
-      )}
+        )}
+      </Box>
 
       {/* User Profile */}
       <Box
         sx={{
           mx: 2,
           mb: 2,
-          p: 2,
-          height: 72,
-          bgcolor: 'white',
+          p: sidebarOpen ? 2 : 0,
+          height: sidebarOpen ? 72 : 'auto',
+          bgcolor: sidebarOpen ? 'white' : 'transparent',
           borderRadius: '16px',
-          border: '1px solid #E5E7EB',
+          border: sidebarOpen ? '1px solid #E5E7EB' : 'none',
           display: 'flex',
           alignItems: 'center',
           gap: 1.5,
           justifyContent: sidebarOpen ? 'space-between' : 'center',
         }}
       >
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+        {sidebarOpen ? (
+          <>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+              <Box
+                component="img"
+                src={lawrenceCruzImage}
+                alt="Lawrence Cruz"
+                sx={{
+                  width: 32,
+                  height: 32,
+                  borderRadius: '50%',
+                  objectFit: 'cover',
+                }}
+              />
+              <Typography variant="body2" sx={{ fontSize: '0.875rem', fontWeight: 500 }}>
+                Lawrence Cruz
+              </Typography>
+            </Box>
+            <IconButton size="small">
+              <UnfoldMoreIcon fontSize="small" />
+            </IconButton>
+          </>
+        ) : (
           <Box
             component="img"
             src={lawrenceCruzImage}
             alt="Lawrence Cruz"
             sx={{
-              width: 32,
-              height: 32,
+              width: 36,
+              height: 36,
               borderRadius: '50%',
               objectFit: 'cover',
             }}
           />
-          {sidebarOpen && (
-            <Typography variant="body2" sx={{ fontSize: '0.875rem', fontWeight: 500 }}>
-              Lawrence Cruz
-            </Typography>
-          )}
-        </Box>
-        {sidebarOpen && (
-          <IconButton size="small">
-            <UnfoldMoreIcon fontSize="small" />
-          </IconButton>
         )}
       </Box>
     </Box>
