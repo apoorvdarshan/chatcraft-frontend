@@ -119,10 +119,11 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage, isDragging =
             elevation={0}
             sx={{
               mb: 2,
-              p: 2,
+              p: 3,
               border: '1px solid #E5E7EB',
-              borderRadius: '12px',
-              bgcolor: '#F9FAFB',
+              borderRadius: '16px',
+              bgcolor: 'white',
+              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
             }}
           >
             <Box
@@ -130,23 +131,15 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage, isDragging =
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                mb: 1.5,
+                mb: 2.5,
+                pb: 2,
+                borderBottom: '1px solid #F3F4F6',
               }}
             >
-              <Typography variant="subtitle2" sx={{ fontWeight: 600, fontSize: '0.875rem' }}>
+              <Typography variant="h6" sx={{ fontWeight: 600, fontSize: '1.125rem', color: '#1F2937' }}>
                 Attached Files
               </Typography>
-              <Box sx={{ display: 'flex', gap: 1 }}>
-                <IconButton
-                  size="small"
-                  onClick={handleAttachClick}
-                  sx={{
-                    color: '#4F46E5',
-                    '&:hover': { bgcolor: '#EEF2FF' },
-                  }}
-                >
-                  <AddIcon fontSize="small" />
-                </IconButton>
+              <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
                 <IconButton
                   size="small"
                   onClick={() => {
@@ -154,12 +147,30 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage, isDragging =
                     setShowAttachments(false);
                   }}
                   sx={{
-                    color: '#6B7280',
-                    '&:hover': { bgcolor: '#F3F4F6' },
+                    color: '#93C5FD',
+                    bgcolor: '#EFF6FF',
+                    padding: '8px',
+                    '&:hover': { bgcolor: '#DBEAFE' },
                   }}
                 >
-                  <DeleteIcon fontSize="small" />
+                  <DeleteIcon sx={{ fontSize: 20 }} />
                 </IconButton>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 0.75,
+                    color: '#3B82F6',
+                    fontSize: '0.938rem',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    '&:hover': { color: '#2563EB' },
+                  }}
+                  onClick={handleAttachClick}
+                >
+                  Add
+                  <AddIcon sx={{ fontSize: 20 }} />
+                </Box>
               </Box>
             </Box>
 
@@ -169,26 +180,27 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage, isDragging =
                 sx={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: 1.5,
-                  mb: 1,
-                  p: 1.5,
-                  bgcolor: 'white',
-                  borderRadius: '8px',
+                  gap: 2,
+                  mb: 1.5,
+                  py: 1,
                 }}
               >
-                <AttachFileIcon sx={{ color: '#6B7280', fontSize: 20 }} />
+                <AttachFileIcon sx={{ color: '#9CA3AF', fontSize: 24, transform: 'rotate(-45deg)' }} />
                 <Box sx={{ flex: 1 }}>
-                  <Typography variant="body2" sx={{ fontSize: '0.875rem', mb: 0.5 }}>
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      fontSize: '1rem',
+                      mb: file.progress !== undefined && file.progress < 100 ? 0.5 : 0,
+                      color: file.progress !== undefined && file.progress < 100 ? '#9CA3AF' : '#1F2937',
+                      fontWeight: 400,
+                    }}
+                  >
                     {file.name}
                   </Typography>
                   {file.progress !== undefined && file.progress < 100 && (
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                      <LinearProgress
-                        variant="determinate"
-                        value={file.progress}
-                        sx={{ flex: 1, height: 4, borderRadius: 2 }}
-                      />
-                      <Typography variant="caption" sx={{ color: '#6B7280', fontSize: '0.75rem' }}>
+                      <Typography variant="caption" sx={{ color: '#93C5FD', fontSize: '0.875rem', minWidth: '40px' }}>
                         {Math.round(file.progress)}%
                       </Typography>
                     </Box>
@@ -197,9 +209,16 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage, isDragging =
                 <IconButton
                   size="small"
                   onClick={() => removeAttachedFile(file.id)}
-                  sx={{ color: '#6B7280' }}
+                  sx={{
+                    color: '#D1D5DB',
+                    padding: '4px',
+                    '&:hover': {
+                      color: '#9CA3AF',
+                      bgcolor: 'transparent',
+                    },
+                  }}
                 >
-                  <CloseIcon fontSize="small" />
+                  <CloseIcon sx={{ fontSize: 20 }} />
                 </IconButton>
               </Box>
             ))}
