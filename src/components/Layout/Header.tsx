@@ -16,7 +16,9 @@ import {
   HelpOutline as HelpIcon,
   Add as AddIcon,
 } from '@mui/icons-material';
-import { useChatStore } from '../../store/chatStore';
+import { useChatStore, ModelType } from '../../store/chatStore';
+import chatGPTLogo from '../../assets/ChatGPT-Logo.png';
+import claudeLogo from '../../assets/claude-logo.png';
 
 interface HeaderProps {
   onNewChat: () => void;
@@ -25,7 +27,19 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ onNewChat }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const { toggleSidebar } = useChatStore();
+  const { toggleSidebar, selectedModel, setSelectedModel } = useChatStore();
+
+  const modelConfig = {
+    chatgpt4: { name: 'ChatGPT 4', logo: chatGPTLogo },
+    chatgpt3: { name: 'ChatGPT 3.5', logo: chatGPTLogo },
+    claude: { name: 'Claude', logo: claudeLogo },
+  };
+
+  const handleModelChange = (event: any) => {
+    const newModel = event.target.value as ModelType;
+    setSelectedModel(newModel);
+    console.log('Model switched to:', modelConfig[newModel].name);
+  };
 
   return (
     <AppBar
@@ -60,24 +74,22 @@ const Header: React.FC<HeaderProps> = ({ onNewChat }) => {
             }}
           >
             <Box
+              component="img"
+              src={modelConfig[selectedModel].logo}
+              alt={modelConfig[selectedModel].name}
               sx={{
                 width: 24,
                 height: 24,
                 borderRadius: '50%',
-                bgcolor: '#F3F4F6',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
+                objectFit: 'cover',
               }}
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="#6B7280">
-                <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z" />
-              </svg>
-            </Box>
+            />
             <Select
-              value="chatgpt4"
+              value={selectedModel}
+              onChange={handleModelChange}
               variant="standard"
               disableUnderline
+              renderValue={(value) => modelConfig[value as ModelType].name}
               sx={{
                 fontSize: '0.875rem',
                 fontWeight: 500,
@@ -87,9 +99,39 @@ const Header: React.FC<HeaderProps> = ({ onNewChat }) => {
                 },
               }}
             >
-              <MenuItem value="chatgpt4">ChatGPT 4</MenuItem>
-              <MenuItem value="chatgpt3">ChatGPT 3.5</MenuItem>
-              <MenuItem value="claude">Claude</MenuItem>
+              <MenuItem value="chatgpt4">
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <Box
+                    component="img"
+                    src={chatGPTLogo}
+                    alt="ChatGPT 4"
+                    sx={{ width: 20, height: 20, borderRadius: '50%', objectFit: 'cover' }}
+                  />
+                  <span>ChatGPT 4</span>
+                </Box>
+              </MenuItem>
+              <MenuItem value="chatgpt3">
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <Box
+                    component="img"
+                    src={chatGPTLogo}
+                    alt="ChatGPT 3.5"
+                    sx={{ width: 20, height: 20, borderRadius: '50%', objectFit: 'cover' }}
+                  />
+                  <span>ChatGPT 3.5</span>
+                </Box>
+              </MenuItem>
+              <MenuItem value="claude">
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <Box
+                    component="img"
+                    src={claudeLogo}
+                    alt="Claude"
+                    sx={{ width: 20, height: 20, borderRadius: '50%', objectFit: 'cover' }}
+                  />
+                  <span>Claude</span>
+                </Box>
+              </MenuItem>
             </Select>
           </Box>
         </Box>

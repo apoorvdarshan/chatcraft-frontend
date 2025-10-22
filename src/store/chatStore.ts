@@ -1,11 +1,14 @@
 import { create } from 'zustand';
 import { Chat, Message, AttachedFile } from '../types';
 
+export type ModelType = 'chatgpt4' | 'chatgpt3' | 'claude';
+
 interface ChatState {
   chats: Chat[];
   currentChatId: string | null;
   sidebarOpen: boolean;
   attachedFiles: AttachedFile[];
+  selectedModel: ModelType;
 
   // Actions
   createNewChat: () => string;
@@ -18,6 +21,7 @@ interface ChatState {
   removeAttachedFile: (fileId: string) => void;
   clearAttachedFiles: () => void;
   getCurrentChat: () => Chat | undefined;
+  setSelectedModel: (model: ModelType) => void;
 }
 
 const ASSISTANT_RESPONSES = [
@@ -45,6 +49,7 @@ export const useChatStore = create<ChatState>((set, get) => ({
   currentChatId: null,
   sidebarOpen: true,
   attachedFiles: [],
+  selectedModel: 'chatgpt4',
 
   createNewChat: () => {
     const newChatId = generateId();
@@ -154,5 +159,9 @@ export const useChatStore = create<ChatState>((set, get) => ({
   getCurrentChat: () => {
     const state = get();
     return state.chats.find((chat) => chat.id === state.currentChatId);
+  },
+
+  setSelectedModel: (model) => {
+    set({ selectedModel: model });
   },
 }));
