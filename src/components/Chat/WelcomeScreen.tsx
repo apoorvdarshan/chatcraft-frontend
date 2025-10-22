@@ -9,18 +9,24 @@ interface SuggestionCardProps {
 }
 
 const SuggestionCard: React.FC<SuggestionCardProps> = ({ title, onClick }) => {
+  const [isHovered, setIsHovered] = React.useState(false);
+
   return (
     <Card
       onClick={onClick}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       sx={{
         cursor: 'pointer',
-        borderRadius: '12px',
-        border: '1px solid #E5E7EB',
+        borderRadius: '24px',
+        border: '2px solid',
+        borderColor: isHovered ? '#3B82F6' : '#E5E7EB',
+        bgcolor: '#F9FAFB',
         transition: 'all 0.2s',
         height: '100%',
+        boxShadow: 'none',
         '&:hover': {
-          borderColor: '#4F46E5',
-          boxShadow: '0 4px 12px rgba(79, 70, 229, 0.15)',
+          boxShadow: 'none',
           transform: 'translateY(-2px)',
         },
       }}
@@ -28,24 +34,28 @@ const SuggestionCard: React.FC<SuggestionCardProps> = ({ title, onClick }) => {
       <CardContent sx={{ p: 3 }}>
         <Box
           sx={{
-            width: 40,
-            height: 40,
-            borderRadius: '8px',
-            bgcolor: '#EEF2FF',
+            width: 48,
+            height: 48,
+            borderRadius: '50%',
+            bgcolor: isHovered ? '#3B82F6' : 'white',
+            border: '1px solid',
+            borderColor: isHovered ? '#3B82F6' : '#E5E7EB',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             mb: 2,
+            transition: 'all 0.2s',
           }}
         >
-          <SparkleIcon sx={{ color: '#4F46E5', fontSize: 20 }} />
+          <SparkleIcon sx={{ color: isHovered ? 'white' : '#93C5FD', fontSize: 24 }} />
         </Box>
         <Typography
           variant="body2"
           sx={{
-            fontSize: '0.875rem',
-            lineHeight: 1.5,
+            fontSize: '0.9375rem',
+            lineHeight: 1.6,
             color: '#1F2937',
+            fontWeight: 400,
           }}
         >
           {title}
