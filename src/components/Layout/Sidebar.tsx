@@ -20,6 +20,7 @@ import {
   Public as PublicIcon,
   ChevronRight as ChevronRightIcon,
   Search as SearchIcon,
+  UnfoldMore as UnfoldMoreIcon,
 } from '@mui/icons-material';
 import { useChatStore } from '../../store/chatStore';
 import logo from '../../assets/logo.png';
@@ -323,7 +324,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
         </Box>
         {sidebarOpen && (
           <IconButton size="small">
-            <ChevronRightIcon fontSize="small" />
+            <UnfoldMoreIcon fontSize="small" />
           </IconButton>
         )}
       </Box>
