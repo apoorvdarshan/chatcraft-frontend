@@ -95,10 +95,12 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ userName, onSuggestionCli
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         height: '100%',
         px: 3,
+        pt: { xs: 4, md: 8 },
         pb: 20,
+        overflow: 'auto',
       }}
     >
       {/* Welcome Message */}
