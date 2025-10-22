@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, CssBaseline, ThemeProvider } from '@mui/material';
 import { theme } from './theme/theme';
 import Sidebar from './components/Layout/Sidebar';
@@ -11,6 +11,7 @@ import { useChatStore } from './store/chatStore';
 const App: React.FC = () => {
   const { currentChatId, createNewChat, addMessage, getCurrentChat } = useChatStore();
   const currentChat = getCurrentChat();
+  const [isDraggingFile, setIsDraggingFile] = useState(false);
 
   const handleNewChat = () => {
     createNewChat();
@@ -32,6 +33,28 @@ const App: React.FC = () => {
     handleSendMessage(suggestion);
   };
 
+  const handleDragEnter = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.dataTransfer.types.includes('Files')) {
+      setIsDraggingFile(true);
+    }
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    // Only set to false if leaving the main content area
+    if (e.currentTarget === e.target) {
+      setIsDraggingFile(false);
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -41,12 +64,16 @@ const App: React.FC = () => {
 
         {/* Main Content */}
         <Box
+          onDragEnter={handleDragEnter}
+          onDragLeave={handleDragLeave}
+          onDragOver={handleDragOver}
           sx={{
             flex: 1,
             display: 'flex',
             flexDirection: 'column',
             overflow: 'hidden',
             bgcolor: '#FFFFFF',
+            position: 'relative',
           }}
         >
           {/* Header */}
@@ -69,7 +96,7 @@ const App: React.FC = () => {
           </Box>
 
           {/* Message Input */}
-          <MessageInput onSendMessage={handleSendMessage} />
+          <MessageInput onSendMessage={handleSendMessage} isDragging={isDraggingFile} setIsDragging={setIsDraggingFile} />
         </Box>
       </Box>
     </ThemeProvider>

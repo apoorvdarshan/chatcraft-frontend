@@ -21,9 +21,11 @@ import { AttachedFile } from '../../types';
 
 interface MessageInputProps {
   onSendMessage: (message: string) => void;
+  isDragging?: boolean;
+  setIsDragging?: (isDragging: boolean) => void;
 }
 
-const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage }) => {
+const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage, isDragging = false, setIsDragging }) => {
   const [message, setMessage] = useState('');
   const [showAttachments, setShowAttachments] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -48,20 +50,57 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage }) => {
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files) {
-      Array.from(files).forEach((file) => {
-        const newFile: AttachedFile = {
-          id: Math.random().toString(36).substring(2, 11),
-          name: file.name,
-          progress: Math.random() * 100,
-        };
-        addAttachedFile(newFile);
-      });
-      setShowAttachments(true);
+      processFiles(files);
     }
   };
 
   const handleAttachClick = () => {
     fileInputRef.current?.click();
+  };
+
+  const processFiles = (files: FileList | File[]) => {
+    Array.from(files).forEach((file) => {
+      const newFile: AttachedFile = {
+        id: Math.random().toString(36).substring(2, 11),
+        name: file.name,
+        progress: Math.random() * 100,
+      };
+      addAttachedFile(newFile);
+    });
+    setShowAttachments(true);
+  };
+
+  // Handle drag and drop
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging?.(false);
+
+    const files = e.dataTransfer.files;
+    if (files && files.length > 0) {
+      processFiles(files);
+    }
+  };
+
+  // Handle paste from clipboard
+  const handlePaste = (e: React.ClipboardEvent) => {
+    const items = e.clipboardData.items;
+    const files: File[] = [];
+
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+      if (item.kind === 'file') {
+        const file = item.getAsFile();
+        if (file) {
+          files.push(file);
+        }
+      }
+    }
+
+    if (files.length > 0) {
+      e.preventDefault();
+      processFiles(files);
+    }
   };
 
   return (
@@ -169,15 +208,18 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage }) => {
 
         {/* Message Input */}
         <Box
+          onDrop={handleDrop}
           sx={{
             display: 'flex',
             alignItems: 'center',
             gap: 2,
             px: 2.5,
             py: 1.5,
-            border: '1px solid #E5E7EB',
+            border: '2px solid',
+            borderColor: isDragging ? '#4F46E5' : '#E5E7EB',
             borderRadius: '16px',
-            bgcolor: 'white',
+            bgcolor: isDragging ? '#F5F3FF' : 'white',
+            transition: 'all 0.2s',
             '&:focus-within': {
               borderColor: '#4F46E5',
               boxShadow: '0 0 0 3px rgba(79, 70, 229, 0.1)',
@@ -225,6 +267,7 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage }) => {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyPress={handleKeyPress}
+            onPaste={handlePaste}
             placeholder="Ask me a question..."
             variant="standard"
             InputProps={{
