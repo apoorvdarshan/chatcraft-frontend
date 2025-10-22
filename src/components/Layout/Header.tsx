@@ -67,10 +67,10 @@ const Header: React.FC<HeaderProps> = ({ onNewChat }) => {
               alignItems: 'center',
               gap: 1,
               px: 1.5,
-              py: 0.5,
-              borderRadius: '8px',
-              border: '1px solid #E5E7EB',
-              bgcolor: 'white',
+              py: 0.75,
+              borderRadius: '20px',
+              border: 'none',
+              bgcolor: '#F3F4F6',
             }}
           >
             <Box
@@ -93,9 +93,13 @@ const Header: React.FC<HeaderProps> = ({ onNewChat }) => {
               sx={{
                 fontSize: '0.875rem',
                 fontWeight: 500,
+                color: '#4B5563',
                 '& .MuiSelect-select': {
                   py: 0,
                   pr: 3,
+                },
+                '& .MuiSelect-icon': {
+                  color: '#9CA3AF',
                 },
               }}
             >
