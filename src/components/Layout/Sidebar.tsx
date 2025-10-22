@@ -22,7 +22,6 @@ import {
   Search as SearchIcon,
   UnfoldMore as UnfoldMoreIcon,
   RocketLaunch as RocketLaunchIcon,
-  MoreHoriz as MoreHorizIcon,
 } from '@mui/icons-material';
 import { useChatStore } from '../../store/chatStore';
 import logo from '../../assets/logo.png';

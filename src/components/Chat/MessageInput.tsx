@@ -4,7 +4,6 @@ import {
   TextField,
   IconButton,
   Typography,
-  LinearProgress,
   Paper,
   Collapse,
 } from '@mui/material';
