@@ -279,10 +279,10 @@ const Sidebar: React.FC<SidebarProps> = () => {
         sx={{
           mx: 2,
           mb: 1.5,
-          p: sidebarOpen ? 2 : 1.5,
+          p: sidebarOpen ? 2 : 2,
           height: sidebarOpen ? 72 : 'auto',
           background: sidebarOpen ? 'linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 50%, #DDD6FE 100%)' : 'white',
-          borderRadius: '16px',
+          borderRadius: sidebarOpen ? '16px' : '24px',
           border: sidebarOpen ? 'none' : '1px solid #E5E7EB',
           position: 'relative',
           overflow: 'hidden',
@@ -290,6 +290,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
+          boxShadow: 'none',
         }}
       >
         {sidebarOpen ? (
@@ -318,7 +319,16 @@ const Sidebar: React.FC<SidebarProps> = () => {
             </Box>
           </>
         ) : (
-          <Typography variant="caption" sx={{ fontSize: '0.75rem', fontWeight: 600, color: '#1F2937' }}>
+          <Typography
+            variant="h6"
+            sx={{
+              fontSize: '0.813rem',
+              fontWeight: 600,
+              color: '#4B5563',
+              textAlign: 'center',
+              lineHeight: 1.3,
+            }}
+          >
             Try Pro!
           </Typography>
         )}
